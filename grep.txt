@@ -1,0 +1,1 @@
+grep -i project *.xml -s -H
