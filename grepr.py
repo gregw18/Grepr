@@ -3,7 +3,7 @@
 # Works as is, but works best if put -s and -H on command line, to not show "no matching files" errors,
 # and to always include the filename with each match - rather inexplicably filenames are missing sometimes
 # if don't add -H.
-# TODO: suppress directory names where no matches were found.
+
 
 import os
 import subprocess
@@ -33,7 +33,6 @@ def grep_dir(base_dir):
         grep_dir(os.path.join(start_dir, dirname))
 
 
-# __main__
 # Read in grep command
 grep_file = "grep.txt"
 if os.path.exists(grep_file):
