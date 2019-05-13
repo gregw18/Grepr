@@ -8,6 +8,16 @@
 import os
 import subprocess
 
+
+def process_dir(dir_name):
+    # Check given directory for matches. Assumes that we are already in that directory.
+    procResult = subprocess.run(grep_cmd, shell=True, check=False, stdout=subprocess.PIPE,
+                                universal_newlines=True)
+    if len(procResult.stdout) > 0:
+        print('\n' + dir_name)
+        print(procResult.stdout)
+
+
 def grep_dir(base_dir):
     # Get list of all subdirectories, including current.
     dirnames = [name for name in os.listdir()
@@ -18,12 +28,7 @@ def grep_dir(base_dir):
     for dirname in dirnames:
         newDir = os.path.join(start_dir, dirname)
         os.chdir(newDir)
-        #os.system(grep_cmd)
-        procResult = subprocess.run(grep_cmd, shell=True, check=False, stdout=subprocess.PIPE,
-                                        universal_newlines=True)
-        if len(procResult.stdout) > 0:
-            print('\n' + newDir)
-            print(procResult.stdout)
+        process_dir(newDir)
 
         grep_dir(os.path.join(start_dir, dirname))
 
@@ -38,12 +43,8 @@ if os.path.exists(grep_file):
 
     # Start with the initial directory.
     start_dir = os.getcwd()
-    #os.system(grep_cmd)
-    procResult = subprocess.run(grep_cmd, shell=True, check=False, stdout=subprocess.PIPE,
-                                universal_newlines=True)
-    if len(procResult.stdout) > 0:
-        print(start_dir)
-        print(procResult.stdout)
+    process_dir(start_dir)
+
     grep_dir(start_dir)
 
 else:
